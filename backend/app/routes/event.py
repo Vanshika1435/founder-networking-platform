@@ -9,7 +9,7 @@ from app.schemas.event import (
     EventResponse
 )
 
-from app.services import event_service
+from app.services.event import event_service
 
 router = APIRouter(
     prefix="/events",

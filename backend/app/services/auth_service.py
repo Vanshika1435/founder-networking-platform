@@ -36,7 +36,9 @@ def signup(user: UserCreate, db: Session):
         linkedin=user.linkedin,
         city=user.city,
         bio=user.bio,
-        company_logo=user.company_logo
+        company_logo=user.company_logo,
+        role="member",
+        approval_status="Pending"
     )
 
     db.add(new_user)
@@ -69,7 +71,11 @@ def login(user: LoginRequest, db: Session):
             status_code=401,
             detail="Invalid email or password"
         )
-
+    if db_user.approval_status != "Approved":
+        raise HTTPException(
+            status_code=403,
+            detail="Your account is waiting for admin approval."
+        )
     token = create_access_token(
         {
             "sub": db_user.email,

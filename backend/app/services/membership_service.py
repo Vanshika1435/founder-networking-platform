@@ -42,5 +42,58 @@ def purchase_membership(
     db.add(new_membership)
     db.commit()
     db.refresh(new_membership)
-
+    log_action(
+        user_email=user.email,
+        action="Purchased Membership",
+        module="Membership",
+        db=db
+    )
     return new_membership
+
+def get_all_memberships(db: Session):
+    return db.query(Membership).all()
+
+
+def get_membership_by_id(membership_id: int, db: Session):
+
+    membership = (
+        db.query(Membership)
+        .filter(Membership.id == membership_id)
+        .first()
+    )
+
+    if not membership:
+        raise HTTPException(
+            status_code=404,
+            detail="Membership not found."
+        )
+
+    return membership
+
+
+from datetime import timedelta
+
+def renew_membership(membership_id: int, db: Session):
+
+    membership = (
+        db.query(Membership)
+        .filter(Membership.id == membership_id)
+        .first()
+    )
+
+    if not membership:
+        raise HTTPException(
+            status_code=404,
+            detail="Membership not found."
+        )
+
+    membership.expiry_date = membership.expiry_date + timedelta(days=365)
+
+    db.commit()
+    db.refresh(membership)
+
+    return {
+        "message": "Membership renewed successfully.",
+        "membership_id": membership.id,
+        "new_expiry_date": membership.expiry_date
+    }

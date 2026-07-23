@@ -7,9 +7,13 @@ class Settings(BaseSettings):
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
+    SMTP_SERVER: str
+    SMTP_PORT: int
+    EMAIL_ADDRESS: str
+    EMAIL_PASSWORD: str
+    ADMIN_EMAIL: str
     class Config:
         env_file = ".env"
 
 
 settings = Settings()
-print(settings.DATABASE_URL)

@@ -25,3 +25,30 @@ def purchase_membership(
         membership,
         db
     )
+@router.get("/")
+def get_all(
+    db: Session = Depends(get_db)
+):
+    return membership_service.get_all_memberships(db)
+
+
+@router.get("/{membership_id}")
+def get_one(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.get_membership_by_id(
+        membership_id,
+        db
+    )
+
+
+@router.put("/{membership_id}/renew")
+def renew(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.renew_membership(
+        membership_id,
+        db
+    )

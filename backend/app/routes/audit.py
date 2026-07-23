@@ -1,0 +1,30 @@
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from database import get_db
+
+from app.models.audit_log import AuditLog
+from app.schemas.audit_log import AuditLogResponse
+
+from app.core.dependencies import require_admin
+
+router = APIRouter(
+    prefix="/audit",
+    tags=["Audit Logs"]
+)
+
+
+@router.get(
+    "/",
+    response_model=list[AuditLogResponse]
+)
+def get_logs(
+    db: Session = Depends(get_db),
+    current_user=Depends(require_admin)
+):
+
+    return (
+        db.query(AuditLog)
+        .order_by(AuditLog.created_at.desc())
+        .all()
+    )
