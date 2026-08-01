@@ -38,11 +38,7 @@ app = FastAPI(
     title="Founder Networking Platform API",
     version="1.0.0"
 )
-origins = [
-    "http://localhost:5173",      # React Dev
-    "http://127.0.0.1:5173", 
-         # Alternate localhost
-]
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,

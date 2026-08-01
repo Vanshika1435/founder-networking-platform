@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://127.0.0.1:8000/tickets";
+const API = `${import.meta.env.VITE_API_URL}/tickets`;
 
 const authHeader = () => ({
   headers: {
