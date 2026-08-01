@@ -13,6 +13,8 @@ def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
+    print("=" * 50)
+    print("TOKEN RECEIVED:", token)
 
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -26,12 +28,16 @@ def get_current_user(
             algorithms=[settings.ALGORITHM]
         )
 
+        print("PAYLOAD:", payload)
+
         email = payload.get("sub")
+        print("EMAIL:", email)
 
         if email is None:
             raise credentials_exception
 
-    except JWTError:
+    except Exception as e:
+        print("JWT ERROR:", e)
         raise credentials_exception
 
     user = (
@@ -40,11 +46,12 @@ def get_current_user(
         .first()
     )
 
+    print("USER FOUND:", user)
+
     if user is None:
         raise credentials_exception
 
     return user
-
 
 def require_admin(
     current_user: User = Depends(get_current_user)

@@ -41,3 +41,58 @@ def get_ticket(registration_id: int, db: Session):
         "event_time": event.event_time,
         "registration_date": registration.registration_date
     }
+
+def get_all_tickets(db: Session):
+
+    tickets = (
+        db.query(
+            EventRegistration,
+            User,
+            Event
+        )
+        .join(
+            User,
+            EventRegistration.user_id == User.id
+        )
+        .join(
+            Event,
+            EventRegistration.event_id == Event.id
+        )
+        .all()
+    )
+
+    result = []
+
+    for registration, user, event in tickets:
+
+        result.append({
+
+            "id": registration.id,
+
+            "ticket_number": registration.ticket_number,
+
+            "attendee_name": user.name,
+
+            "email": user.email,
+
+            "phone": user.phone,
+
+            "event_name": event.title,
+
+            "venue": event.venue,
+
+            "event_date": event.event_date,
+
+            "event_time": event.event_time,
+
+            "attendance": registration.attendance,
+
+            "registration_date": registration.registration_date,
+
+            "pdf_ticket_path": registration.pdf_ticket_path,
+
+            "qr_code_path": registration.qr_code_path,
+
+        })
+
+    return result

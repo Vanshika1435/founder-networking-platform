@@ -13,6 +13,8 @@ import PaymentsPage from "../pages/Payments/PaymentsPage";
 import BlogPage from "../pages/Blog/BlogPage";
 import GalleryPage from "../pages/Gallery/GalleryPage";
 import ReportsPage from "../pages/Reports/ReportsPage";
+import UserPage from "../pages/Users/UserPage";
+import EventRegistrationsPage from "../pages/Registrations/EventRegistrationsPage";
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -131,7 +133,26 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <UserPage />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/registrations"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <EventRegistrationsPage />
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/reports"
           element={

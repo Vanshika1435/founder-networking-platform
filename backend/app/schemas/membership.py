@@ -9,10 +9,17 @@ class MembershipCreate(BaseModel):
 
 class MembershipResponse(BaseModel):
     id: int
+
     user_id: int
+    member_name: str
+    email: str
+
     plan_id: int
+    plan_name: str
+
     status: str
     payment_status: str
+
     start_date: date | None
     expiry_date: date | None
 

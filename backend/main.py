@@ -31,6 +31,9 @@ from app.routes.gallery import router as gallery_router
 from app.models.audit_log import AuditLog
 from app.routes.audit import router as audit_router
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.user import router as user_router
+from app.api import blog
+from app.api import gallery
 app = FastAPI(
     title="Founder Networking Platform API",
     version="1.0.0"
@@ -49,7 +52,10 @@ app.add_middleware(
 #scheduler.start()
 Base.metadata.create_all(bind=engine)
 
+app.include_router(blog.router)
+app.include_router(gallery.router)
 app.include_router(auth_router)
+app.include_router(user_router)
 app.include_router(membership_plan_router)
 app.include_router(membership_router)
 app.include_router(admin_router)

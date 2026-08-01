@@ -1,91 +1,126 @@
+import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
+  UserCog,
   CalendarDays,
-  CreditCard,
-  FileBarChart2,
-  Image,
-  Newspaper,
-  UserCircle,
   Ticket,
+  CreditCard,
+  Newspaper,
+  Image,
+  ClipboardCheck,
+  BarChart3,
+  Building2,
 } from "lucide-react";
+const menuItems = [
 
-import { Link, useLocation } from "react-router-dom";
-
-const menu = [
   {
-    icon: <LayoutDashboard size={20} />,
-    title: "Dashboard",
+    name: "Dashboard",
     path: "/dashboard",
+    icon: LayoutDashboard,
   },
+
   {
-    icon: <Users size={20} />,
-    title: "Membership",
+    name: "Users",
+    path: "/users",
+    icon: UserCog,
+  },
+
+  {
+    name: "Membership",
     path: "/membership",
+    icon: Users,
   },
+
   {
-    icon: <CalendarDays size={20} />,
-    title: "Events",
+    name: "Events",
     path: "/events",
+    icon: CalendarDays,
   },
   {
-    icon: <Ticket size={20} />,
-    title: "Tickets",
+    name: "Registrations",
+    path: "/registrations",
+    icon: ClipboardCheck,
+  },
+  {
+    name: "Tickets",
     path: "/tickets",
+    icon: Ticket,
   },
+
   {
-    icon: <CreditCard size={20} />,
-    title: "Payments",
-    path: "/payments",
-  },
-  {
-    icon: <UserCircle size={20} />,
-    title: "Founders",
+    name: "Founder Directory",
     path: "/founders",
+    icon: Building2,
   },
+
   {
-    icon: <Newspaper size={20} />,
-    title: "Blog",
+    name: "Payments",
+    path: "/payments",
+    icon: CreditCard,
+  },
+
+  {
+    name: "Blog",
     path: "/blog",
+    icon: Newspaper,
   },
+
   {
-    icon: <Image size={20} />,
-    title: "Gallery",
+    name: "Gallery",
     path: "/gallery",
+    icon: Image,
   },
+
   {
-    icon: <FileBarChart2 size={20} />,
-    title: "Reports",
+    name: "Reports",
     path: "/reports",
+    icon: BarChart3,
   },
+
 ];
 
 function Sidebar() {
-  const location = useLocation();
-
   return (
-    <aside className="fixed left-0 top-0 h-screen w-72 bg-slate-900 text-white shadow-2xl z-50">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-slate-950 text-white shadow-2xl">
 
-      <div className="text-2xl font-bold p-8">
-        FounderHub
+      <div className="border-b border-slate-800 p-6">
+
+        <h1 className="text-2xl font-bold tracking-wide">
+          Founder Hub
+        </h1>
+
+        <p className="text-sm text-slate-400 mt-1">
+          Admin Panel
+        </p>
+
       </div>
 
-      <nav className="px-4">
+      <nav className="p-4 space-y-2">
 
-        {menu.map((item) => (
-          <Link
-            key={item.title}
-            to={item.path}
-            className={`flex items-center gap-4 px-4 py-3 rounded-xl mb-2 transition ${
-              location.pathname === item.path
-                ? "bg-indigo-600"
-                : "hover:bg-slate-800"
-            }`}
-          >
-            {item.icon}
-            {item.title}
-          </Link>
-        ))}
+        {menuItems.map((item) => {
+
+          const Icon = item.icon;
+
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 rounded-xl px-4 py-3 transition-all duration-300 ${
+                  isActive
+                    ? "bg-indigo-600 shadow-lg"
+                    : "hover:bg-slate-800"
+                }`
+              }
+            >
+              <Icon size={20} />
+
+              <span>{item.name}</span>
+
+            </NavLink>
+          );
+        })}
 
       </nav>
 

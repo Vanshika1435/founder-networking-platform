@@ -52,3 +52,65 @@ def renew(
         membership_id,
         db
     )
+@router.delete("/{membership_id}")
+def delete_membership(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.delete_membership(
+        membership_id,
+        db
+    )
+@router.put("/{membership_id}/approve")
+def approve_membership(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.approve_membership(
+        membership_id,
+        db
+    )
+
+
+@router.put("/{membership_id}/reject")
+def reject_membership(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.reject_membership(
+        membership_id,
+        db
+    )
+
+
+@router.put("/{membership_id}/suspend")
+def suspend_member(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.suspend_member(
+        membership_id,
+        db
+    )
+
+
+@router.put("/{membership_id}/activate")
+def activate_member(
+    membership_id: int,
+    db: Session = Depends(get_db)
+):
+    return membership_service.activate_member(
+        membership_id,
+        db
+    )
+@router.put("/{membership_id}")
+def update_membership(
+    membership_id: int,
+    membership: MembershipCreate,
+    db: Session = Depends(get_db)
+):
+    return membership_service.update_membership(
+        membership_id,
+        membership,
+        db
+    )
