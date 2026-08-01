@@ -40,7 +40,8 @@ app = FastAPI(
 )
 origins = [
     "http://localhost:5173",      # React Dev
-    "http://127.0.0.1:5173",      # Alternate localhost
+    "http://127.0.0.1:5173", 
+         # Alternate localhost
 ]
 app.add_middleware(
     CORSMiddleware,
