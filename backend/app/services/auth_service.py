@@ -52,16 +52,25 @@ def signup(user: UserCreate, db: Session):
 
 
 def login(user: LoginRequest, db: Session):
+    print("LOGIN EMAIL:", user.email)
 
     db_user = db.query(User).filter(
         User.email == user.email
     ).first()
+
+    print("USER FOUND:", db_user)
+
+    if db_user:
+        print("DB EMAIL:", db_user.email)
+        print("HASH:", db_user.password)
 
     if not db_user:
         raise HTTPException(
             status_code=401,
             detail="Invalid email or password"
         )
+    print("PASSWORD MATCH:", verify_password(user.password, db_user.password))
+
 
     if not verify_password(
         user.password,
