@@ -1,5 +1,5 @@
 from datetime import date, time
-
+from typing import Optional
 from pydantic import BaseModel
 
 
@@ -9,7 +9,7 @@ class EventCreate(BaseModel):
 
     description: str
 
-    banner: str
+    banner: Optional[str] = None
 
     speaker: str
 
